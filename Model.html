@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>实现一个全局唯一的Modal弹框</title>
+    <style>
+        #model {
+            width: 300px;
+            height: 300px;
+            line-height: 300px;
+            text-align: center;
+            border: 1px solid #ccc;
+            position: fixed;
+            z-index: 1001;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            background: #fff;
+        }
+    </style>
+</head>
+<body>
+<button id="open">打开模态框</button>
+<button id="close">关闭模态框</button>
+<script>
+  class Model {
+    static getInstance() {
+      // 确保全局唯一
+      if (!Model.instance) {
+        Model.instance = document.createElement('div')
+        Model.instance.innerHTML = '这是一个模态框'
+        Model.instance.id = 'model'
+        Model.instance.style.display = 'none'
+        document.body.appendChild(Model.instance)
+      }
+      return Model.instance
+    }
+  }
+
+  document.getElementById('open').addEventListener('click', function () {
+    const model = Model.getInstance()
+    model.style.display = 'block'
+  })
+  document.getElementById('close').addEventListener('click', function () {
+    const model = Model.getInstance()
+    if (model) {
+      model.style.display = 'none'
+    }
+  })
+</script>
+</body>
+</html>
